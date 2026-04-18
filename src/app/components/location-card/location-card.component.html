@@ -1,7 +1,11 @@
 <div class="location-card">
   <div class="card-header">
     <h3>{{ getLocationIcon(location.location) }} {{ location.location }}</h3>
-    <span class="safety-badge active">Active</span>
+    <span class="safety-badge" 
+          [ngClass]="'status-' + getSafetyStatus().status.toLowerCase()"
+          [title]="getSafetyStatus().reason">
+      {{ getSafetyStatus().icon }} {{ getSafetyStatus().label }}
+    </span>
   </div>
   <div class="metrics">
     <div class="metric">

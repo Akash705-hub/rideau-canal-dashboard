@@ -124,7 +124,28 @@ body {
   text-transform: uppercase;
   background-color: var(--safe-color);
   color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 
+  &.status-safe {
+    background-color: var(--safe-color);
+    box-shadow: 0 2px 8px rgba(16, 124, 16, 0.3);
+  }
+
+  &.status-caution {
+    background-color: var(--caution-color);
+    box-shadow: 0 2px 8px rgba(255, 165, 0, 0.3);
+  }
+
+  &.status-unsafe {
+    background-color: var(--unsafe-color);
+    box-shadow: 0 2px 8px rgba(216, 59, 1, 0.3);
+  }
+
+  /* Fallback for old class names */
   &.caution {
     background-color: var(--caution-color);
   }
