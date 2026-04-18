@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     permissions:
       contents: read
 
@@ -30,11 +30,12 @@ jobs:
 
       - name: Package deployment artifacts
         run: |
-          mkdir -p deploy-output
-          cp -r dist deploy-output/
-          cp server.js deploy-output/
-          cp package.json deploy-output/
-          cp package-lock.json deploy-output/
+          New-Item -ItemType Directory -Force -Path deploy-output
+          Copy-Item -Recurse dist deploy-output\dist
+          Copy-Item server.js deploy-output\server.js
+          Copy-Item package.json deploy-output\package.json
+          Copy-Item package-lock.json deploy-output\package-lock.json
+          Copy-Item web.config deploy-output\web.config
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
