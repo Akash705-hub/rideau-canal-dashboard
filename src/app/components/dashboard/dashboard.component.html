@@ -1,0 +1,23 @@
+<div class="container">
+  <div *ngIf="isLoading && locations.length === 0 && !error" class="loading">
+    <p>Loading dashboard...</p>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="(locations.length > 0 || !isLoading) && !error" class="dashboard">
+    <!-- Location Cards Grid -->
+    <div *ngIf="locations.length > 0" class="locations-grid">
+      <app-location-card *ngFor="let location of locations" [location]="location"></app-location-card>
+    </div>
+
+    <div *ngIf="locations.length === 0" class="error">
+      <p>No location data available.</p>
+    </div>
+
+  </div>
+
+  <app-charts *ngIf="!error"></app-charts>
+</div>

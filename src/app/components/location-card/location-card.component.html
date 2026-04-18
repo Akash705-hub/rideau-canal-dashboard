@@ -1,0 +1,23 @@
+<div class="location-card">
+  <div class="card-header">
+    <h3>{{ getLocationIcon(location.location) }} {{ location.location }}</h3>
+    <span class="safety-badge active">Active</span>
+  </div>
+  <div class="metrics">
+    <div class="metric">
+      <span class="metric-label">Ice Thickness</span>
+      <span class="metric-value">{{ (location.avgIceThickness || 0) | number:'1.1-1' }}</span>
+      <span class="metric-unit">cm</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Surface Temp</span>
+      <span class="metric-value">{{ (location.avgSurfaceTemperature || 0) | number:'1.1-1' }}</span>
+      <span class="metric-unit">°C</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Snow</span>
+      <span class="metric-value">{{ (location.maxSnowAccumulation || 0) | number:'1.1-1' }}</span>
+      <span class="metric-unit">cm</span>
+    </div>
+  </div>
+</div>

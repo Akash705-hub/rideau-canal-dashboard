@@ -1,11 +1,13 @@
 /**
- * Rideau Canal Monitoring Dashboard
+ * Rideau Canal Monitoring Dashboard - Express Server
+ * Serves Angular frontend + Cosmos DB API backend
  */
 
 const express = require('express');
 const { CosmosClient } = require('@azure/cosmos');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -13,7 +15,13 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+
+// Serve Angular build
+const distRootPath = path.join(__dirname, 'dist/rideau-canal-dashboard');
+const browserDistPath = path.join(distRootPath, 'browser');
+const staticRoot = fs.existsSync(browserDistPath) ? browserDistPath : distRootPath;
+
+app.use(express.static(staticRoot));
 
 // ===================== Cosmos DB Setup =====================
 const cosmosClient = new CosmosClient({
@@ -30,21 +38,21 @@ function mapCosmosRecord(item) {
         location: item.location,
         timestamp: item.timestamp,
 
-        avgIceThickness: item.avgIceThickness,
-        maxIceThickness: item.maxIceThickness,
-        minIceThickness: item.minIceThickness,
+        avgIceThickness: item.avg_ice_thickness,
+        maxIceThickness: item.max_ice_thickness,
+        minIceThickness: item.min_ice_thickness,
 
-        avgSurfaceTemperature: item.avgSurfaceTemp,
-        maxSurfaceTemperature: item.maxSurfaceTemp,
-        minSurfaceTemperature: item.minSurfaceTemp,
+        avgSurfaceTemperature: item.avg_surface_temperature,
+        maxSurfaceTemperature: item.max_surface_temperature,
+        minSurfaceTemperature: item.min_surface_temperature,
 
-        avgSnowAccumulation: item.avgSnow,
-        maxSnowAccumulation: item.maxSnow,
-        minSnowAccumulation: item.minSnow,
+        avgSnowAccumulation: item.max_snow_accumulation,
+        maxSnowAccumulation: item.max_snow_accumulation,
+        minSnowAccumulation: item.min_snow_accumulation,
 
-        avgExternalTemperature: item.avgExternalTemp,
-        maxExternalTemperature: item.maxExternalTemp,
-        minExternalTemperature: item.minExternalTemp,
+        avgExternalTemperature: item.avg_external_temperature,
+        maxExternalTemperature: item.max_external_temperature,
+        minExternalTemperature: item.min_external_temperature,
     };
 }
 
@@ -135,10 +143,6 @@ app.get("/api/history/:location", async (req, res) => {
 });
 
 // ===================== Root + Health =====================
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
 app.get('/health', (req, res) => {
     res.json({
         status: 'healthy',
@@ -149,6 +153,16 @@ app.get('/health', (req, res) => {
             container: process.env.COSMOS_CONTAINER
         }
     });
+});
+
+// Serve Angular index.html for the app root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(staticRoot, 'index.html'));
+});
+
+// Serve Angular index.html for all non-API routes (client-side routing)
+app.get('/*splat', (req, res) => {
+    res.sendFile(path.join(staticRoot, 'index.html'));
 });
 
 // ===================== Start Server =====================

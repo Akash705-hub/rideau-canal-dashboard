@@ -1,0 +1,12 @@
+.dashboard {
+  .loading {
+    text-align: center;
+    padding: 40px;
+  }
+
+  .error {
+    color: var(--unsafe-color);
+    text-align: center;
+    padding: 40px;
+  }
+}

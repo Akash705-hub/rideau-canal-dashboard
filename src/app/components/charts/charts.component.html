@@ -1,0 +1,30 @@
+<div class="charts-section">
+  <div *ngIf="isLoading" class="loading">
+    <p>Loading charts...</p>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="!isLoading && !error" class="chart-container">
+    <h3>Ice Thickness Trend (Last Hour)</h3>
+    <canvas *ngIf="iceThicknessChartConfig.type" 
+            baseChart 
+            [type]="iceThicknessChartConfig.type"
+            [data]="iceThicknessChartConfig.data"
+            [options]="iceThicknessChartConfig.options">
+    </canvas>
+    <p *ngIf="!iceThicknessChartConfig.type" class="chart-empty">No ice thickness chart data available.</p>
+  </div>
+  <div *ngIf="!isLoading && !error" class="chart-container">
+    <h3>Temperature Trend (Last Hour)</h3>
+    <canvas *ngIf="temperatureChartConfig.type"
+            baseChart
+            [type]="temperatureChartConfig.type"
+            [data]="temperatureChartConfig.data"
+            [options]="temperatureChartConfig.options">
+    </canvas>
+    <p *ngIf="!temperatureChartConfig.type" class="chart-empty">No temperature chart data available.</p>
+  </div>
+</div>

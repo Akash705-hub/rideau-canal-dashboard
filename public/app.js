@@ -29,6 +29,7 @@ async function updateDashboard() {
         const latestResponse = await fetch(`${API_BASE_URL}/api/latest`);
         const latestData = await latestResponse.json();
 
+        console.log(latestData);
         if (latestData.success) {
             updateLocationCards(latestData.data);
             updateLastUpdateTime();
@@ -47,17 +48,18 @@ async function updateDashboard() {
  */
 function updateLocationCards(locations) {
     locations.forEach(loc => {
+        console.log(loc);
         const key = getLocationKey(loc.location);
 
-        // Update values
+        // Update values with null checks and defaults
         document.getElementById(`ice-${key}`).textContent =
-            loc.avgIceThickness.toFixed(1);
+            (loc.avgIceThickness ?? 0).toFixed(1);
 
         document.getElementById(`temp-${key}`).textContent =
-            loc.avgSurfaceTemperature.toFixed(1);
+            (loc.avgSurfaceTemperature ?? 0).toFixed(1);
 
         document.getElementById(`snow-${key}`).textContent =
-            loc.maxSnowAccumulation.toFixed(1);
+            (loc.maxSnowAccumulation ?? 0).toFixed(1);
 
         // No safetyStatus available in DB → default display
         const badge = document.getElementById(`status-${key}`);

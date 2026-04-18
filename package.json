@@ -1,23 +1,44 @@
 {
-  "name": "web-dashboard",
+  "name": "rideau-canal-dashboard",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Rideau Canal Ice Monitoring Dashboard",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\"",
+    "ng": "ng",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build": "ng build --configuration production",
+    "build:dev": "ng build",
+    "watch": "ng build --watch --configuration development"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
   "dependencies": {
+    "@angular/animations": "^21.2.9",
+    "@angular/cdk": "^21.2.7",
+    "@angular/common": "^21.2.9",
+    "@angular/compiler": "^21.2.9",
+    "@angular/core": "^21.2.9",
+    "@angular/forms": "^21.2.9",
+    "@angular/platform-browser": "^21.2.9",
+    "@angular/platform-browser-dynamic": "^21.2.9",
+    "@angular/router": "^21.2.9",
     "@azure/cosmos": "^4.8.0",
+    "chart.js": "^4.4.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "ng2-charts": "^10.0.0",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.6.0",
+    "zone.js": "^0.16.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "@angular/build": "^21.2.7",
+    "@angular-eslint/builder": "^21.3.1",
+    "@angular/cli": "^21.2.7",
+    "@angular/compiler-cli": "^21.2.9",
+    "@types/node": "^20.0.0",
+    "nodemon": "^3.1.11",
+    "typescript": "^5.9.3"
   }
 }
